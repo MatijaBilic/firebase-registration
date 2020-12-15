@@ -1,0 +1,76 @@
+<div class="row register">
+    <div class="col-12 form-btn" (click)="regToggle()">
+        <div id="form_btn">
+            <span>Prijavite se</span>
+        </div>
+    </div>
+
+
+    <div class="modal fade" [ngClass]="{'show': reg}" [ngStyle]="{'display' : setModal()}" id="modal" tabindex="-1" role="dialog">
+        <div class="overlay-modal" (click)="regToggle()">
+        </div>
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+
+                    <div [ngClass]="{'element_hidden': formHidden}">
+
+                        <form [formGroup]="register" (ngSubmit)="onSubmit()">
+                            <div class="form-group underlined">
+
+                                <div class="form-group">
+                                    <label class="form-check-label" for="ime">Ime*:</label>
+                                    <input [ngClass]="{'is-invalid': register.get('ime').errors && register.get('ime').touched}" class="form-control" type="text" name="ime" id="ime" formControlName="ime">
+                                    <div class="invalid-feedback">Obavezno polje</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-check-label" for="prezime">Prezime*:</label>
+                                    <input [ngClass]="{'is-invalid': register.get('prezime').errors && register.get('prezime').touched}" class="form-control" type="text" name="prezime" id="prezime" formControlName="prezime">
+                                    <div class="invalid-feedback">Obavezno polje</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-check-label" for="email">E-mail*:</label>
+                                    <input [ngClass]="{'is-invalid': register.get('email').errors && register.get('email').touched}" class="form-control" type="email" name="email" id="email" formControlName="email">
+                                    <div class="invalid-feedback">Obavezno polje</div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-check-label" for="id">OIB ili JMBG*:</label>
+                                    <input [ngClass]="{'is-invalid': register.get('id').errors && register.get('id').touched}" class="form-control" type="text" name="id" id="id" formControlName="id">
+                                    <div class="invalid-feedback">Obavezno polje</div>
+                                </div>
+                            </div>
+                            <div [formGroup]="gdpr" class="col-12">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="false" name="izjava" id="izjava" formControlName="izjava">
+                                    <label class="form-check-label" for="izjava">
+    Prihvaćam uvjete <a [routerLink]="['/zastita-osobnih-podataka']" class="form-link">Izjave o zaštiti osobnih podataka</a>
+  </label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="false" name="popis" id="popis" formControlName="popis">
+                                    <label class="form-check-label" for="popis">
+    Želim da me obavjestite o budućim stručnim skupovima.
+  </label>
+                                </div>
+                            </div>
+                            <div class="col-12 my-4 btn_wrap">
+                                <button [disabled]="!returnState(register.valid)" [ngClass]="{'disabled': !returnState(register.valid)}" type="submit" class="btn action_btn">Pošaljite podatke</button>
+                            </div>
+                        </form>
+
+                    </div>
+
+
+                    <div [ngClass]="{'element_hidden': responseHidden}" class="column_response">
+                        <figure>
+                            <img class="img-fluid" src="./../../assets/check.svg">
+                        </figure>
+                        <div>
+                            <p>Vaša prijava je uspješno zabilježena. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
