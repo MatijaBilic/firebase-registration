@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FirebaseApp } from '@angular/fire';
 import { Router } from '@angular/router';
 import { FirebaseService } from './../firebase.service';
 import { User } from './../user'
@@ -14,11 +15,14 @@ export class ContentComponent implements OnInit {
 
   constructor(
     private firebase: FirebaseService,
-    private router: Router
+    private router: Router,
+    private fire: FirebaseApp
   ) { }
 
   ngOnInit(): void {
     this.hash = location.pathname.substring(location.pathname.lastIndexOf('/user_') + 6, location.pathname.length);
+
+    this.fetchUser(this.hash)
   }
 
   fetchUser = (url: string) => {
@@ -33,6 +37,13 @@ export class ContentComponent implements OnInit {
         this.router.navigate(['project/not-found'])
       }
     })
+      .catch(err => console.log(err))
+  }
+
+  authUser = () => {
+    this.fire.auth().signInWithEmailAndPassword(this.user['email'], this.user['hash'])
+      .then(snapData => console.log(snapData.user))
+      .catch(err => console.log(err))
   }
 
 }
